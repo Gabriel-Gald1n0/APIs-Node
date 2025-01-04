@@ -30,8 +30,8 @@ Esta é uma API de Lista de Tarefas desenvolvida com Node.js, Express, Prisma e 
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
+   git clone https://github.com/Gabriel-Gald1n0/APIs-Node.git
+   cd APIs-Node
    ```
 
 2. Instale as dependências:
