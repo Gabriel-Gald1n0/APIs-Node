@@ -1,37 +1,33 @@
-# API de Lista de Tarefas com Autenticação
+# API de Posts
 
-Esta é uma API de Lista de Tarefas desenvolvida com Node.js, Express, Prisma e SQLite. A API permite que os usuários se registrem, façam login e gerenciem suas tarefas.
+Uma API simples para criar e gerenciar posts, permitindo que os usuários adicionem imagens, textos alternativos (alt) e descrições, similar ao funcionamento de posts no Instagram.
 
 ## Funcionalidades
 
-- **Registro de Usuários**: Criação de contas de usuários com senhas seguras (hash com bcrypt).
-- **Autenticação**: Login utilizando JWT para controle de sessão.
-- **Gerenciamento de Tarefas**:
-  - Criação de tarefas.
-  - Listagem de tarefas do usuário logado.
-  - Atualização de tarefas.
-  - Exclusão de tarefas.
+- **Adicionar Post**: Os usuários podem criar posts com uma imagem, um alt e uma descrição.
+- **Listar Posts**: Recuperar todos os posts criados.
+- **Obter Post por ID**: Detalhar um post específico.
+- **Atualizar Post**: Editar as informações de um post.
+- **Deletar Post**: Remover um post do sistema.
 
 ## Tecnologias Utilizadas
 
 - **Node.js**: Plataforma para execução de JavaScript no backend.
-- **Express**: Framework para criação de APIs.
-- **Prisma**: ORM para interação com o banco de dados.
-- **SQLite**: Banco de dados leve e embutido.
-- **bcrypt**: Biblioteca para hash de senhas.
-- **JWT (jsonwebtoken)**: Biblioteca para geração de tokens de autenticação.
+- **MONGODB**: Banco de dados.
 
-## Requisitos
 
+## Como Configurar
+
+### Requisitos
 - Node.js (v16 ou superior)
 - npm (ou yarn)
 
-## Configuração do Projeto
+### Passos
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/Gabriel-Gald1n0/APIs-Node.git
-   cd APIs-Node
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   cd seu-repositorio
    ```
 
 2. Instale as dependências:
@@ -42,9 +38,8 @@ Esta é uma API de Lista de Tarefas desenvolvida com Node.js, Express, Prisma e 
 3. Configure as variáveis de ambiente:
    Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
    ```env
-   DATABASE_URL="file:../database/dev.db"
    PORT=3000
-   JWT_SECRET="sua_chave_secreta"
+   DATABASE_URL="file:./dev.db"
    ```
 
 4. Configure o banco de dados com o Prisma:
@@ -54,80 +49,45 @@ Esta é uma API de Lista de Tarefas desenvolvida com Node.js, Express, Prisma e 
 
 5. Inicie o servidor:
    ```bash
-   npx nodemon server.js
+   npm run dev
    ```
 
    O servidor estará rodando em `http://localhost:3000`.
 
-## Endpoints
+## Rotas da API
 
-### Autenticação
+### POST `/api/posts`
+- **Descrição**: Cria um novo post.
+- **Cabeçalho**:
+  - `Content-Type`: `multipart/form-data`
+- **Corpo da Requisição**:
+  - `image`: Arquivo de imagem (upload via form-data).
+  - `alt`: Texto alternativo para a imagem.
+  - `description`: Descrição do post.
 
-#### POST `/api/auth/register`
-- **Descrição**: Registra um novo usuário.
+### GET `/api/posts`
+- **Descrição**: Lista todos os posts.
+
+### GET `/api/posts/:id`
+- **Descrição**: Recupera os detalhes de um post específico.
+
+### PUT `/api/posts/:id`
+- **Descrição**: Atualiza um post.
 - **Corpo da Requisição**:
   ```json
   {
-    "username": "exemplo",
-    "password": "senha123"
-  }
-  ```
-- **Resposta**:
-  ```json
-  {
-    "message": "Usuário registrado com sucesso!"
+    "alt": "Texto atualizado",
+    "description": "Descrição atualizada"
   }
   ```
 
-#### POST `/api/auth/login`
-- **Descrição**: Faz login de um usuário.
-- **Corpo da Requisição**:
-  ```json
-  {
-    "username": "exemplo",
-    "password": "senha123"
-  }
-  ```
-- **Resposta**:
-  ```json
-  {
-    "token": "jwt_token"
-  }
-  ```
-
-### Tarefas
-
-#### GET `/api/tasks`
-- **Descrição**: Lista todas as tarefas do usuário logado.
-- **Autenticação**: Necessária (JWT no cabeçalho `Authorization`).
-
-#### POST `/api/tasks`
-- **Descrição**: Cria uma nova tarefa.
-- **Corpo da Requisição**:
-  ```json
-  {
-    "title": "Minha tarefa",
-    "description": "Detalhes da tarefa"
-  }
-  ```
-
-#### PUT `/api/tasks/:id`
-- **Descrição**: Atualiza uma tarefa existente.
-- **Corpo da Requisição**:
-  ```json
-  {
-    "title": "Tarefa atualizada",
-    "description": "Novos detalhes"
-  }
-  ```
-
-#### DELETE `/api/tasks/:id`
-- **Descrição**: Exclui uma tarefa.
+### DELETE `/api/posts/:id`
+- **Descrição**: Remove um post do sistema.
 
 ## Melhorias Futuras
 
-- Implementar paginação para a listagem de tarefas.
-- Adicionar validação mais robusta para entradas do usuário.
-- Criar testes automatizados.
+- Adicionar autenticação para criar e gerenciar posts.
+- Implementar paginação na listagem de posts.
+- Suporte a diferentes formatos de imagem.
 
 
