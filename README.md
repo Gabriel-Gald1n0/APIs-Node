@@ -8,12 +8,12 @@ Uma API simples para criar e gerenciar posts, permitindo que os usuários adicio
 - **Listar Posts**: Recuperar todos os posts criados.
 - **Obter Post por ID**: Detalhar um post específico.
 - **Atualizar Post**: Editar as informações de um post.
-- **Deletar Post**: Remover um post do sistema.
 
 ## Tecnologias Utilizadas
 
 - **Node.js**: Plataforma para execução de JavaScript no backend.
-- **MONGODB**: Banco de dados.
+- **MONGODB**: Banco de dados NoSQL utilizado para armazenamento dos posts.
+- **Gemini API**: Utilizada para gerar descrições automáticas para as imagens.
 
 
 ## Como Configurar
@@ -21,13 +21,16 @@ Uma API simples para criar e gerenciar posts, permitindo que os usuários adicio
 ### Requisitos
 - Node.js (v16 ou superior)
 - npm (ou yarn)
+- Conta na Gemini API para obter a chave de API.
+- Banco de dados MongoDB configurado.
 
 ### Passos
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
+   git clone https://github.com/Gabriel-Gald1n0/APIs-Node.git
+   cd APIs-Node
+   git checkout API-Posts-Instagram
    ```
 
 2. Instale as dependências:
@@ -38,18 +41,26 @@ Uma API simples para criar e gerenciar posts, permitindo que os usuários adicio
 3. Configure as variáveis de ambiente:
    Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
    ```env
-   PORT=3000
-   DATABASE_URL="file:./dev.db"
+   NEW_CHAVE_DB_CONEXAO="sua-string-de-conexão-do-mongodb"
+   CHAVE_API="sua-chave-da-api-gemini"
    ```
 
-4. Configure o banco de dados com o Prisma:
-   ```bash
-   npx prisma migrate dev --name init
-   ```
+   - **Obter chave da Gemini API**:
+     1. Acesse o site da [Gemini API](https://geminiapi.com/).
+     2. Crie uma conta ou faça login.
+     3. Navegue até o painel do desenvolvedor e gere uma nova chave de API.
+     4. Copie a chave gerada e insira no `.env` como `CHAVE_API`.
 
-5. Inicie o servidor:
+   - **Obter string de conexão do MongoDB**:
+     1. Acesse o [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) ou outro serviço MongoDB.
+     2. Crie um cluster gratuito ou use uma instância existente.
+     3. No painel do MongoDB Atlas, clique em "Connect" e escolha "Connect your application".
+     4. Copie a string fornecida e substitua `<password>` pela senha do usuário configurado.
+     5. Insira essa string no `.env` como `NEW_CHAVE_DB_CONEXAO`.
+
+4. Inicie o servidor:
    ```bash
-   npm run dev
+   npm run start
    ```
 
    O servidor estará rodando em `http://localhost:3000`.
@@ -77,12 +88,8 @@ Uma API simples para criar e gerenciar posts, permitindo que os usuários adicio
   ```json
   {
     "alt": "Texto atualizado",
-    "description": "Descrição atualizada"
   }
   ```
-
-### DELETE `/api/posts/:id`
-- **Descrição**: Remove um post do sistema.
 
 ## Melhorias Futuras
 

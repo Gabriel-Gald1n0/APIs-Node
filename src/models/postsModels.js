@@ -1,0 +1,28 @@
+import 'dotenv/config'
+import { ObjectId } from 'mongodb';
+import conectarAoBanco from '../config/dbConfig.js';
+
+const conexao = await conectarAoBanco(process.env.NEW_CHAVE_DB_CONEXAO)
+
+export async function getPosts(){
+    const db = conexao.db("insta_dino");
+    const colecao = db.collection("posts");
+
+    return colecao.find().toArray();
+}
+
+export async function createPost(newPost){
+    const db = conexao.db("insta_dino");
+    const colecao = db.collection("posts");
+
+    return colecao.insertOne(newPost);
+}
+
+export async function updatePost(id, newPost){
+    const db = conexao.db("insta_dino");
+    const colecao = db.collection("posts");
+
+    const objID = ObjectId.createFromHexString(id);
+
+    return colecao.updateOne({_id: new ObjectId(objID)}, {$set: newPost});
+}

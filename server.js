@@ -1,19 +1,15 @@
-require('dotenv').config();
-const express = require('express');
-const { PrismaClient } = require('@prisma/client'); 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+import express from 'express';
+import routes from './src/routes/postsRoutes.js';
 
 const app = express();
-const prismaClient = new PrismaClient(); 
+app.use(express.static("uploads"));
+routes(app);
 
-// Middleware para parsear o corpo da requisição
-app.use(express.json());
+app.listen(3000, () => {
+    console.log("Executando servidor");
+});
 
-// Rotas
-app.use('/api/auth', require('./src/routes/auth.js')); // Autenticação
-app.use('/api/tasks', require('./src/routes/tasks.js')); // Gerenciamento de tarefas
+app.get("/api", (req, res) => {
+    res.status(200).send("Servidor online");
+});
 
-// Porta do servidor
-const PORT = process.env.PORT || 3000; // Define a porta com fallback para 3000
-app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
